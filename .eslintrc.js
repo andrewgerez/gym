@@ -16,6 +16,8 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     camelcase: 'off',
+    "no-useless-constructor": "off",
+    "@typescript-eslint/no-useless-constructor": false,
     'prettier/prettier': [
       'error',
       {
