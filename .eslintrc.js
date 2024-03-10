@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
+    camelcase: 'off',
     'prettier/prettier': [
       'error',
       {
