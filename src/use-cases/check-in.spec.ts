@@ -19,8 +19,8 @@ describe('Register Use Case', () => {
       title: 'TypeScript Gym',
       description: '',
       phone: '',
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: new Decimal(-25.4377219),
+      longitude: new Decimal(-49.280523),
     })
 
     vi.useFakeTimers()
@@ -63,7 +63,7 @@ describe('Register Use Case', () => {
 
   it('should be able to check in in twice but in different days', async () => {
     vi.setSystemTime(new Date(2024, 2, 14, 1, 0, 0))
-    
+
     await sut.execute({
       gymId: 'gym-01',
       userId: 'user-01',
@@ -81,5 +81,25 @@ describe('Register Use Case', () => {
     })
 
     expect(checkIn.id).toEqual(expect.any(String))
+  })
+
+  it('should no be able to check in distant gym', async () => {
+    gymsRepository.items.push({
+      id: 'gym-02',
+      title: 'TypeScript Gym',
+      description: '',
+      phone: '',
+      latitude: new Decimal(-25.4556554),
+      longitude: new Decimal(-49.2413538),
+    })
+
+    expect(async () =>
+      await sut.execute({
+        gymId: 'gym-2',
+        userId: 'user-01',
+        userLatitude: -25.4377219,
+        userLongitude: -49.280523,
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })
