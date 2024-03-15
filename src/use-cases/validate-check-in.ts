@@ -6,6 +6,8 @@ import { getDistanceBetweenCoordinate } from "@/utils/get-distance-between-coord
 import { Distance } from "@/enums"
 import { MaxNumberOfCheckInsError } from "./errors/max-number-of-check-ins-error"
 import { MaxDistanceError } from "./errors/max-distance-error"
+import dayjs from "dayjs"
+import { LateCheckInValidationError } from "./errors/late-check-in-validation-error"
 
 interface ValidateCheckInUseCaseRequest {
   checkInId: string
@@ -27,6 +29,15 @@ export class ValidateCheckInUseCase {
 
     if (!checkIn) {
       throw new ResourceNotFoundError()
+    }
+
+    const distanceInMinutesFromCheckInCreation = dayjs(new Date()).diff(
+      checkIn.created_at,
+      'minutes',
+    )
+
+    if (distanceInMinutesFromCheckInCreation > 20) {
+      throw new LateCheckInValidationError()
     }
 
     checkIn.validated_at = new Date()
