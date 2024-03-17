@@ -1,6 +1,6 @@
 import { CheckIn } from "@prisma/client"
-import { CheckInsRepository } from "@/repositories/prisma/check-ins-repository"
-import { GymsRepository } from "@/repositories/prisma/gyms-repository"
+import { CheckInsRepository } from "@/repositories/check-ins-repository"
+import { GymsRepository } from "@/repositories/gyms-repository"
 import { ResourceNotFoundError } from "./errors/resource-not-found-error"
 import { getDistanceBetweenCoordinate } from "@/utils/get-distance-between-coordinates"
 import { Distance } from "@/enums"
