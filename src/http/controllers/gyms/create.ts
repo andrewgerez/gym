@@ -5,7 +5,7 @@ import { z } from 'zod'
 export async function create(req: FastifyRequest, reply: FastifyReply) {
   const createGymBodySchema = z.object({
     title: z.string(),
-    description: z.string().email().nullable(),
+    description: z.string().nullable(),
     phone: z.string().nullable(),
     latitude: z.number().refine(value => {
       return Math.abs(value) <= 90
